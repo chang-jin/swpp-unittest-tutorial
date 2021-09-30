@@ -26,3 +26,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .venv
+db.sqlite3
