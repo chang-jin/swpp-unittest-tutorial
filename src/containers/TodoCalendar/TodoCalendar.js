@@ -13,7 +13,7 @@ import './TodoCalendar.css';
 class TodoCalendar extends Component {
   state = {
     year: 2021,
-    month: 9,
+    month: 10,
   }
   componentDidMount() {
     this.props.onGetAll();
