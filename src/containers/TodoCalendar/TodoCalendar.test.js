@@ -1,12 +1,13 @@
+import { mount } from 'enzyme';
+import { getMockStore } from '../../test-utils/mocks';
+import TodoCalendar from './TodoCalendar';
+import { history } from '../../store/store';
+import * as actionCreators from '../../store/actions/todo';
 import React from 'react';
- import { Provider } from 'react-redux';
- import { ConnectedRouter } from 'connected-react-router';
- import { Route, Switch } from 'react-router-dom';
- import { mount } from 'enzyme';
- import { getMockStore } from '../../test-utils/mocks';
- import TodoCalendar from './TodoCalendar';
- import { history } from '../../store/store';
- import * as actionCreators from '../../store/actions/todo';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { Route, Switch } from 'react-router-dom';
+ 
 
  const stubInitialState = {
    todos: [
@@ -57,29 +58,27 @@ import React from 'react';
      expect(spyGetTodos).toBeCalledTimes(1);
    });
 
-   it('should set state month with prev button', () => {
+   it('should set state year and month with prev button', () => {
      const component = mount(todoCalendar);
      const wrapper = component.find('.prevButton');
      wrapper.simulate('click');
      wrapper.simulate('click');
-    //  for (let i = 0; i < 9; i++) wrapper.simulate('click');
      const newTodoCalendarInstance = component
        .find(TodoCalendar.WrappedComponent)
        .instance();
-    //  expect(newTodoCalendarInstance.state.year).toBe(2020);
+     expect(newTodoCalendarInstance.state.year).toBe(2021);
      expect(newTodoCalendarInstance.state.month).toBe(7);
    });
 
-   it('should set state properly on year & month with next button', () => {
+   it('should set state year and month with next button', () => {
      const component = mount(todoCalendar);
      const wrapper = component.find('.nextButton');
      wrapper.simulate('click');
      wrapper.simulate('click');
-    //  for (let i = 0; i < 4; i++) wrapper.simulate('click');
      const newTodoCalendarInstance = component
        .find(TodoCalendar.WrappedComponent)
        .instance();
-    //  expect(newTodoCalendarInstance.state.year).toBe(2022);
+     expect(newTodoCalendarInstance.state.year).toBe(2021);
      expect(newTodoCalendarInstance.state.month).toBe(11);
    });
  });
