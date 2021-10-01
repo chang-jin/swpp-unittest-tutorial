@@ -37,6 +37,7 @@ export const postTodo_ = (td) => {
       year: td.year,
       month: td.month,
       date: td.date,
+      done: td.done,
     }
   };
 };
