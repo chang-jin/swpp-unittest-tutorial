@@ -31,8 +31,8 @@ class TodoCalendar extends Component {
       year: this.state.month === 12 ? this.state.year + 1 : this.state.year,
       month: this.state.month === 12 ? 1 : this.state.month + 1
     })
-  }
-
+  };
+  
   render() {
     return (
       <div>

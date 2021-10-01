@@ -74,8 +74,8 @@ const Calendar = (props) => {
   const dates = [];
   const year = props.year;
   const month = props.month - 1;
-  let date = 1;
   let maxDate = (new Date(year, month + 1, 0)).getDate();
+  console.log(year);
 
   for (let date=1; date<=maxDate; date++) {
     dates.push(new Date(year, month, date));

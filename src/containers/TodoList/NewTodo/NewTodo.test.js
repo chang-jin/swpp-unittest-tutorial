@@ -46,6 +46,7 @@ describe('<NewTodo />', () => {
       .mockImplementation(td => { return dispatch => {}; });
     const component = mount(newTodo);
     const wrapper = component.find('button');
+    console.log(wrapper.debug());
     wrapper.simulate('click');
     expect(spyPostTodo).toHaveBeenCalledTimes(1);
   });
@@ -54,7 +55,7 @@ describe('<NewTodo />', () => {
     const title = 'TEST_TITLE'
     const component = mount(newTodo);
     const wrapper = component.find('input');
-    wrapper.simulate('change', { target: { value: title } });
+    wrapper.at(0).simulate('change', { target: { value: title } });
     const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
     expect(newTodoInstance.state.title).toEqual(title);
     expect(newTodoInstance.state.content).toEqual('');
@@ -69,6 +70,21 @@ describe('<NewTodo />', () => {
     expect(newTodoInstance.state.title).toEqual('');
     expect(newTodoInstance.state.content).toEqual(content);
   });
+
+  it ('should set state properly on dueDate input', () => {
+    const dueDate = {
+      year: 2021,
+      month: 10,
+      date: 1,
+    };
+    const component = mount(newTodo);
+    const wrapper = component.find('input');
+    wrapper.at(1).simulate('change', {target: {value: dueDate.year}});
+    wrapper.at(2).simulate('change', {target: {value: dueDate.month}});
+    wrapper.at(3).simulate('change', {target: {value: dueDate.date}});
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    expect(newTodoInstance.state.dueDate.year).toEqual(dueDate.year);
+    expect(newTodoInstance.state.dueDate.month).toEqual(dueDate.month);
+    expect(newTodoInstance.state.dueDate.date).toEqual(dueDate.date);
+  });
 });
-
-

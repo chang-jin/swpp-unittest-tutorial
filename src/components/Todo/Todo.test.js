@@ -19,6 +19,7 @@ describe('<Todo />', () => {
 
   it('should render title as done if done=true', () => {
     const component = shallow(<Todo done={true} title={'TEST_TITLE'} />);
+    //console.log(component.debug());
     const wrapper = component.find('.done');
     expect(wrapper.text()).toEqual('TEST_TITLE');
   });
