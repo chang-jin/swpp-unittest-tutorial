@@ -21,8 +21,7 @@ const renderCalenderBody = (dates, todos, clickDone) => {
   let i = 0;
   const rows = [];
   for (let week=0; week<5; week++){
-    let day = 0; // Sunday
-
+    
     let row = [];
     for (let day=0; day<7; day++) {
       const date = dates[i];
@@ -64,7 +63,8 @@ const renderCalenderBody = (dates, todos, clickDone) => {
 }
 
 const renderCalendar = (dates, todos, clickDone) => (
-  <Table striped style={{"height": "600px", "width": "600px"}}>
+  <Table striped style={{"height": "600px", "width": "600px"}}
+    className="Calendar">
     {CALENDAR_HEADER}
     {renderCalenderBody(dates, todos, clickDone)}
   </Table>
