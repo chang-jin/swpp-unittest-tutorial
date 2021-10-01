@@ -9,9 +9,9 @@ const stubTodo = {
   title: "title 1",
   content: "content 1",
   dueDate: {
-    year: 0,
-    month: 0,
-    date: 0,
+    year: "2021",
+    month: "9",
+    date: "30",
   },
 };
 
@@ -27,7 +27,6 @@ describe("ActionCreators", () => {
       title: 'title 1',
       content: 'content 1'
     }, ];
-
     // Replace axios.get with mock
     axios.get = jest.fn(url => {
       return new Promise((resolve, reject) => {
@@ -38,7 +37,6 @@ describe("ActionCreators", () => {
         resolve(result);
       })
     });
-
     store.dispatch(actionCreators.getTodos()).then(() => {
       const newState = store.getState();
       expect(newState.td.todos).toBe(stubTodoList);
