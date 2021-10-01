@@ -30,4 +30,20 @@ describe('<Todo />', () => {
     wrapper.simulate('click');
     expect(mockClickDone).toHaveBeenCalledTimes(1);
   });
+  // components/Todo/todo.test.js
+describe('<Todo />', () => {
+    // ...
+    it('should render title as not done if done=false', () => {
+    const component = shallow(<Todo done={false} title={'TEST_TITLE'} />);
+    let wrapper = component.find('.done');
+    expect(wrapper.length).toBe(0);
+    wrapper = component.find('.text');
+    expect(wrapper.text()).toEqual('TEST_TITLE');
+    });
+    it('should render title as done if done=true', () => {
+    const component = shallow(<Todo done={true} title={'TEST_TITLE'} />);
+    const wrapper = component.find('.done');
+    expect(wrapper.text()).toEqual('TEST_TITLE');
+    });
+   });
 });
