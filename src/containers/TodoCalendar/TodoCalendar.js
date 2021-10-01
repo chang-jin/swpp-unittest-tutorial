@@ -13,7 +13,7 @@ import './TodoCalendar.css';
 class TodoCalendar extends Component {
   state = {
     year: 2021,
-    month: 9,
+    month: 10,
   }
   componentDidMount() {
     this.props.onGetAll();
@@ -35,12 +35,12 @@ class TodoCalendar extends Component {
 
   render() {
     return (
-      <div>
+      <div className='TodoCalendar'>
         <div className="link"><NavLink to='/todos' exact>See TodoList</NavLink></div>
         <div className="header">
-          <button onClick={this.handleClickPrev}> prev month </button>
+          <button className='header-prev' onClick={this.handleClickPrev}> prev month </button>
           {this.state.year}.{this.state.month}
-          <button onClick={this.handleClickNext}> next month </button>
+          <button className='header-next' onClick={this.handleClickNext}> next month </button>
         </div>
         <Calendar
           year={this.state.year}
