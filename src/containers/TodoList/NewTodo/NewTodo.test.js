@@ -52,11 +52,23 @@ describe('<NewTodo />', () => {
   
   it(`should set state properly on title input`, () => {
     const title = 'TEST_TITLE'
+    const year = 'TEST_YEAR'
+    const month = 'TEST_MONTH'
+    const date = 'TEST_DATE'
     const component = mount(newTodo);
-    const wrapper = component.find('input');
-    wrapper.simulate('change', { target: { value: title } });
+    const wrapper_1 = component.find('input').at(0);
+    wrapper_1.simulate('change', { target: { value: title } });
+    const wrapper_2 = component.find('input').at(1);
+    wrapper_2.simulate('change', { target: { value: year }});
+    const wrapper_3 = component.find('input').at(2);
+    wrapper_3.simulate('change', { target: { value: month }});
+    const wrapper_4 = component.find('input').at(3);
+    wrapper_4.simulate('change', { target: { value: date }});
     const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
     expect(newTodoInstance.state.title).toEqual(title);
+    expect(newTodoInstance.state.dueDate.year).toEqual(year);
+    expect(newTodoInstance.state.dueDate.month).toEqual(month);
+    expect(newTodoInstance.state.dueDate.date).toEqual(date);
     expect(newTodoInstance.state.content).toEqual('');
   });
 
