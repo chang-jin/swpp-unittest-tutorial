@@ -31,14 +31,14 @@ class TodoCalendar extends Component {
       year: this.state.month === 12 ? this.state.year + 1 : this.state.year,
       month: this.state.month === 12 ? 1 : this.state.month + 1
     })
-  }
-
+  };
+  
   render() {
     return (
       <div>
         <div className="link"><NavLink to='/todos' exact>See TodoList</NavLink></div>
         <div className="header">
-          <button onClick={this.handleClickPrev}> prev month </button>
+          <button onClick={() => this.handleClickPrev()}> prev month </button>
           {this.state.year}.{this.state.month}
           <button onClick={this.handleClickNext}> next month </button>
         </div>
@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => {
     onToggleTodo: (id) =>
       dispatch(actionCreators.toggleTodo(id)),
     onGetAll: () =>
-      dispatch(actionCreators.getTodos())
+      dispatch(actionCreators.getTodos()),
   }
 }
 
