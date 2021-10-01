@@ -7,8 +7,19 @@ import store from '../store';
 const stubTodo = {
   id: 0,
   title: 'title 1',
-  content: 'content 1'
+  content: 'content 1',
 };
+
+const stubPostTodo = {
+    id: 0,
+    title: 'title 1',
+    content: 'content 1',
+    dueDate: {
+        year: '2000',
+        month: '5',
+        date: '28',
+    },
+}
 
 describe('ActionCreators', () => {
   afterEach(() => {
@@ -97,7 +108,7 @@ describe('ActionCreators', () => {
         });
       })
 
-    store.dispatch(actionCreators.postTodo(stubTodo)).then(() => {
+    store.dispatch(actionCreators.postTodo(stubPostTodo)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });

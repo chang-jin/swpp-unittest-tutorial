@@ -20,6 +20,10 @@ const CALENDAR_HEADER = (
 const renderCalenderBody = (dates, todos, clickDone) => {
   let i = 0;
   const rows = [];
+  let todos_ = todos;
+  if (!todos) {
+    todos_ = [];
+  }
   for (let week=0; week<5; week++){
     let day = 0; // Sunday
 
@@ -31,7 +35,7 @@ const renderCalenderBody = (dates, todos, clickDone) => {
           <Table.Cell className={`cell ${day === 0 && 'sunday'}`} key={7*week+day}>
             <div className="date">{date.getDate()}</div>
             {
-              todos.filter(todo => {
+              todos_.filter(todo => {
                 return todo.year === date.getFullYear() &&
                   todo.month === date.getMonth() &&
                   todo.date === date.getDate();
