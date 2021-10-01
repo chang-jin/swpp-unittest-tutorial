@@ -85,23 +85,52 @@ describe('ActionCreators', () => {
     });
   });
 
+  // 오류 발생하는 코드 
+  // it(`'postTodo' should post todo correctly`, (done) => {
+  //   const spy = jest.spyOn(axios, 'post')
+  //     .mockImplementation((url, td) => {
+  //       return new Promise((resolve, reject) => {
+  //         const result = {
+  //           status: 200,
+  //           data: stubTodo
+  //         };
+  //         resolve(result);
+  //       });
+  //     })
+
+  //   store.dispatch(actionCreators.postTodo(stubTodo)).then(() => {
+  //     expect(spy).toHaveBeenCalledTimes(1);
+  //     done();
+  //   });
+  // });
   it(`'postTodo' should post todo correctly`, (done) => {
+    const stubPostingTodo = {...stubTodo, dueDate:{
+      year: 2021,
+      month: 11,
+      date: 11
+    }}
     const spy = jest.spyOn(axios, 'post')
       .mockImplementation((url, td) => {
+        const {dueDate, todo} = td
+        const retTodo = {
+          ...td,
+          ...dueDate,
+        }
         return new Promise((resolve, reject) => {
           const result = {
-            status: 200,
-            data: stubTodo
+            status: 201,
+            data: retTodo
           };
           resolve(result);
         });
       })
-
-    store.dispatch(actionCreators.postTodo(stubTodo)).then(() => {
+    // 틀린 부분
+    store.dispatch(actionCreators.postTodo(stubPostingTodo)).then(() => {
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
   });
+
 
   it(`'deleteTodo' should delete todo correctly`, (done) => {
     const spy = jest.spyOn(axios, 'delete')
@@ -138,4 +167,5 @@ describe('ActionCreators', () => {
       done();
     });
   });
+
 });
