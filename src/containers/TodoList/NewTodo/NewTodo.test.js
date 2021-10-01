@@ -46,7 +46,6 @@ describe('<NewTodo />', () => {
       .mockImplementation(td => { return dispatch => {}; });
     const component = mount(newTodo);
     const wrapper = component.find('button');
-    console.log(wrapper.debug());
     wrapper.simulate('click');
     expect(spyPostTodo).toHaveBeenCalledTimes(1);
   });
