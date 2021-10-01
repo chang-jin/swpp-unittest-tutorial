@@ -22,7 +22,6 @@ describe('ActionCreators', () => {
       title: 'title 1',
       content: 'content 1'
     }, ];
-
     // Replace axios.get with mock
     axios.get = jest.fn(url => {
       return new Promise((resolve, reject) => {
@@ -33,7 +32,6 @@ describe('ActionCreators', () => {
         resolve(result);
       })
     });
-
     store.dispatch(actionCreators.getTodos()).then(() => {
       const newState = store.getState();
       expect(newState.td.todos).toBe(stubTodoList);
@@ -86,18 +84,22 @@ describe('ActionCreators', () => {
   });
 
   it(`'postTodo' should post todo correctly`, (done) => {
+    let tmp = {id: 0, title: 'for posting', content: 'this is content', year: 2021, month: 8, date: 21,done: false}
+    let post={title: 'for posting', content: 'this is content', dueDate: {year: 2021, month: 8,date: 21}}
     const spy = jest.spyOn(axios, 'post')
       .mockImplementation((url, td) => {
         return new Promise((resolve, reject) => {
           const result = {
             status: 200,
-            data: stubTodo
+            data: tmp
           };
           resolve(result);
         });
       })
-
-    store.dispatch(actionCreators.postTodo(stubTodo)).then(() => {
+    
+    store.dispatch(actionCreators.postTodo(post )).then(() => {
+      const update = store.getState();
+      expect(update.td.todos[update.td.todos.length-1]).toEqual(tmp);
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
