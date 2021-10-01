@@ -56,6 +56,16 @@ describe('ActionCreators', () => {
           resolve(result);
         });
       })
+    
+      // const spy = jest.spyOn(axios, "get").mockImplementation((url) => {
+      //   return new Promise((resolve, reject) => {
+      //     const result = {
+      //       status: 200,
+      //       data: stubTodoList,
+      //     };
+      //     resolve(result);
+      //   });
+      // });
 
     store.dispatch(actionCreators.getTodos()).then(() => {
       const newState = store.getState();
