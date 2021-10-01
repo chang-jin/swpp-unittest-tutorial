@@ -14,35 +14,7 @@ describe('ActionCreators', () => {
   afterEach(() => {
     jest.clearAllMocks();
   })
-  // Implementation using `jest.fn` API
-  /*
-  it(`'getTodos' should fetch todos correctly`, (done) => {
-    const stubTodoList = [{
-      id: 0,
-      title: 'title 1',
-      content: 'content 1'
-    }, ];
 
-    // Replace axios.get with mock
-    axios.get = jest.fn(url => {
-      return new Promise((resolve, reject) => {
-        const result = {
-          status: 200,
-          data: stubTodoList
-        };
-        resolve(result);
-      })
-    });
-
-    store.dispatch(actionCreators.getTodos()).then(() => {
-      const newState = store.getState();
-      expect(newState.td.todos).toBe(stubTodoList);
-      expect(axios.get).toHaveBeenCalledTimes(1);
-      done();
-    });
-  });
-  */
-  // Implementation using `spyOn` API
   it(`'getTodos' should fetch todos correctly`, (done) => {
     const stubTodoList = [stubTodo];
 
@@ -86,21 +58,27 @@ describe('ActionCreators', () => {
   });
 
   it(`'postTodo' should post todo correctly`, (done) => {
+    let tmp = {id: 0, title: 'for posting', content: 'this is content', year: 2021, month: 8, date: 21,done: false}
+    let post={title: 'for posting', content: 'this is content', dueDate: {year: 2021, month: 8,date: 21}}
     const spy = jest.spyOn(axios, 'post')
       .mockImplementation((url, td) => {
         return new Promise((resolve, reject) => {
           const result = {
             status: 200,
-            data: stubTodo
+            // data: stubTodo
+            data: tmp,
           };
           resolve(result);
         });
       })
-
-    store.dispatch(actionCreators.postTodo(stubTodo)).then(() => {
+      
+    store.dispatch(actionCreators.postTodo(post )).then(() => {
+      const update = store.getState();
+      expect(update.td.todos[update.td.todos.length-1]).toEqual(tmp);
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
+
   });
 
   it(`'deleteTodo' should delete todo correctly`, (done) => {
