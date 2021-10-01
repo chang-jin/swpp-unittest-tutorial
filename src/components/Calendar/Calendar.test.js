@@ -39,16 +39,17 @@ describe('<Calendar />', () => {
     expect(wrapper.length).toBe(1);
   });
 
-  it('render with todos', () => {
-    const component = shallow(<Calendar year={2021} month={9} todos={stubTodos} />);
-    const wrapper = component.find(".cell");
-    expect(wrapper.length).toBe(30);
-  });
-
   it('render header', () => {
     const component = shallow(<Calendar />);
     const wrapper = component.find("Table");
     const header = wrapper.find("TableHeaderCell");
     expect(header.length).toBe(7);
   });
+
+  it('render with todos', () => {
+    const component = shallow(<Calendar year={2021} month={9} todos={stubTodos} />);
+    const wrapper = component.find(".cell");
+    expect(wrapper.length).toBe(30);
+  });
+
 });

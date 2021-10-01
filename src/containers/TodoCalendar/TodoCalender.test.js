@@ -1,121 +1,93 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { Provider } from 'react-redux';
-import { connectRouter, ConnectedRouter } from 'connected-react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import React, { Component } from "react";
+import { shallow, mount } from "enzyme";
+import { Provider, connect } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
+import { Route, Switch } from "react-router-dom";
 
-import TodoCalendar from './TodoCalendar';
-import { getMockStore } from '../../test-utils/mocks';
-import { history } from '../../store/store';
-import * as actionCreators from '../../store/actions/todo';
+import { getMockStore } from "../../test-utils/mocks";
+import TodoCalendar from "./TodoCalendar";
+import { history } from "../../store/store";
 
-const stubInitialState = [
-    {
-        id: 1,
-        title: "picnic",
-        content: 'content1',
-        done: true,
-        year: 2021,
-        month: 10,
-        date: 1,
-    },
-    {
-        id: 2,
-        title: "movie",
-        content: 'watch movie',
-        done: false,
-        year: 2021,
-        month: 10,
-        date: 1,
-    },
-    {
-        id: 3,
-        title: "sleep",
-        content: 'good',
-        done: true,
-        year: 2021,
-        month: 10,
-        date: 1,
-    },
-];
-  
+import * as actionCreators from '../../store/actions/index';
+
+
+const stubInitialState = {
+    todos : [
+        {
+            id: 1,
+            title: "picnic",
+            content: 'content1',
+            done: true,
+            year: 2021,
+            month: 9,
+            date: 30,
+        },
+        {
+            id: 2,
+            title: "movie",
+            content: 'watch movie',
+            done: false,
+            year: 2021,
+            month: 9,
+            date: 30,
+        },
+        {
+            id: 3,
+            title: "sleep",
+            content: 'good',
+            done: true,
+            year: 2021,
+            month: 9,
+            date: 30,
+        },
+        ],
+    selectedTodo: null,
+};
+
 const mockStore = getMockStore(stubInitialState);
-  
-describe('<TodoCalendar />', () => {
-    let calendar, spyGetTodos, spyToggleTodo;
-    beforeEach(() => {
-        calendar = (
-        <Provider store={mockStore}>
-            <ConnectedRouter history={history}>
-            <Switch>
-                <Route path="/" exact component={TodoCalendar} />
-            </Switch>
-            </ConnectedRouter>
-        </Provider>
-        );
-        spyToggleTodo = jest
-            .spyOn(actionCreators, "toggleTodo")
-            .mockImplementation((id) => {
-                return (dispatch) => {};
-            });
-        spyGetTodos = jest
-            .spyOn(actionCreators, "getTodos")
-            .mockImplementation(() => {
-                return (dispatch) => {};
-            });
-    });
 
-    it("should render calendar without errors", () => {
-        const component = mount(calendar);
-        const wrapper = component.find(".todoCalendar");
-        expect(wrapper.length).toBe(1);
-    });
+jest.mock("../../components/Calendar/Calendar", () => {
+  return jest.fn((props) => {
+    return <div className="calendar" onClick={props.clickDone}></div>;
+  });
+});
 
-    it("should get todos without errors", () => {
-        const component = mount(calendar);
-        expect(spyGetTodos).toHaveBeenCalledTimes(2);
-    });
+describe("<TodoCalendar />", () => {
+  let calendar;
+  beforeEach(() => {
+    calendar = (
+      <Provider store={mockStore}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" exact component={TodoCalendar} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+    actionCreators.getTodos = jest.fn((dispath) => {});
+  });
 
-    it("should make prev button work without errors", () => {
-        const component = mount(calendar);
-        const wrapper = component.find(".prevButton");
-        wrapper.simulate("click");
-        const newMonth = component.find(TodoCalendar.WrappedComponent).instance();
-        expect(newMonth.state.month).toBe(8);
-    });
+  it('rendering test', () => {
+    const component = mount(calendar);
+    const wrapper = component.find(".header");
+    expect(wrapper.length).toBe(1);
+  });
 
-    it("should make next button work without errors", () => {
-        const component = mount(calendar);
-        const wrapper = component.find(".nextButton");
-        wrapper.simulate("click");
-        const newMonth = component.find(TodoCalendar.WrappedComponent).instance();
-        expect(newMonth.state.month).toBe(10);
-    });
+  it('button click test', () => {
+    const component = mount(calendar);
+    const wrapper = component.find("button");
+    expect(wrapper.length).toBe(2);
 
-    it("should make link work without errors", () => {
-        const component = mount(calendar);
-        const wrapper = component.find(".link");
-        wrapper.simulate("click");
-        expect(spyGetTodos).toHaveBeenCalledTimes(5);
-    });
-
-    it("should change year when month is over 12 without errors", () => {
-        const component = mount(calendar);
-        const wrapper = component.find(".nextButton");
-        for (let i = 0; i < 12; i++) {
-        wrapper.simulate("click");
-        }
-        const newYear = component.find(TodoCalendar.WrappedComponent).instance();
-        expect(newYear.state.year).toBe(2022);
-    });
-
-    it("should change year when month is under 1 without errors", () => {
-        const component = mount(calendar);
-        const wrapper = component.find(".prevButton");
-        for (let i = 0; i < 12; i++) {
-        wrapper.simulate("click");
-        }
-        const newYear = component.find(TodoCalendar.WrappedComponent).instance();
-        expect(newYear.state.year).toBe(2020);
-    });
+    const calendarInstance = component.find(TodoCalendar.WrappedComponent).instance();
+    expect(calendarInstance.state.month).toEqual(9);
+    wrapper.at(1).simulate("click");
+    wrapper.at(1).simulate("click");
+    wrapper.at(1).simulate("click");
+    wrapper.at(1).simulate("click");
+    expect(calendarInstance.state.year).toEqual(2022);
+    expect(calendarInstance.state.month).toEqual(1);
+    wrapper.at(0).simulate("click");
+    expect(calendarInstance.state.year).toEqual(2021);
+    expect(calendarInstance.state.month).toEqual(12);
+  });
 });
