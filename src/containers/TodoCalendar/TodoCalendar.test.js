@@ -73,19 +73,3 @@ import React from 'react';
          expect(wrapper.state().year).toBe(year - 1)
      });
 
-    //  it('should render next month', () => {
-    //      const component = mount(todoCalendar)
-    //      const wrapper = component.find('TodoCalendar');
-    //      const header = component.find('.header')
-    //      const preButton = header.find('.btn_next')
-
-    //      let year = wrapper.state().year
-    //      let month = wrapper.state().month
-
-    //      for (let i = 0; i < 12; i++) {
-    //          preButton.simulate('click')
-    //      }
-
-    //      expect(wrapper.state().year).toBe(year + 1)
-    //  });
- })
