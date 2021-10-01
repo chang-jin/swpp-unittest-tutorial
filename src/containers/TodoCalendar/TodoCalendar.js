@@ -43,6 +43,7 @@ class TodoCalendar extends Component {
           <button onClick={this.handleClickNext}> next month </button>
         </div>
         <Calendar
+          className="todoCalendar"
           year={this.state.year}
           month={this.state.month}
           todos={this.props.storedTodos}
