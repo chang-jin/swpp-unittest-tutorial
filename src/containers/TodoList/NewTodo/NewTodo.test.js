@@ -49,12 +49,16 @@ describe('<NewTodo />', () => {
     wrapper.simulate('click');
     expect(spyPostTodo).toHaveBeenCalledTimes(1);
   });
-  
+
   it(`should set state properly on title input`, () => {
     const title = 'TEST_TITLE'
     const component = mount(newTodo);
     const wrapper = component.find('input');
-    wrapper.simulate('change', { target: { value: title } });
+    // Method “simulate” is meant to be run on 1 node. 4 found instead.
+    wrapper.at(0).simulate('change', { target: { value: title } });
+    wrapper.at(1).simulate('change', { target: { value: title } });
+    wrapper.at(2).simulate('change', { target: { value: title } });
+    wrapper.at(3).simulate('change', { target: { value: title } });
     const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
     expect(newTodoInstance.state.title).toEqual(title);
     expect(newTodoInstance.state.content).toEqual('');
