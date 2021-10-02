@@ -84,6 +84,7 @@ describe('<TodoList />', () => {
     const spyToggleTodo = jest.spyOn(actionCreators, 'toggleTodo')
       .mockImplementation(id => { return dispatch => {}; });
     const component = mount(todoList);
+    //console.log(component.debug());
     const wrapper = component.find('.spyTodo .doneButton').at(0);
     wrapper.simulate('click');
     expect(spyToggleTodo).toBeCalledTimes(1);
