@@ -51,23 +51,63 @@ describe('<NewTodo />', () => {
   });
   
   it(`should set state properly on title input`, () => {
-    const title = 'TEST_TITLE'
+    const title = 'TEST_TITLE';
+    const now = new Date();
     const component = mount(newTodo);
-    const wrapper = component.find('input');
+    const wrapper = component.find('input').at(0);
     wrapper.simulate('change', { target: { value: title } });
     const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
     expect(newTodoInstance.state.title).toEqual(title);
     expect(newTodoInstance.state.content).toEqual('');
+    expect(newTodoInstance.state.dueDate).toEqual({ year: now.getFullYear(), month: now.getMonth() + 1, date: now.getDate(), });
   });
 
   it(`should set state properly on content input`, () => {
-    const content = 'TEST_CONTENT'
+    const content = 'TEST_CONTENT';
+    const now = new Date();
     const component = mount(newTodo);
     const wrapper = component.find('textarea');
     wrapper.simulate('change', { target: { value: content } });
     const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
     expect(newTodoInstance.state.title).toEqual('');
     expect(newTodoInstance.state.content).toEqual(content);
+    expect(newTodoInstance.state.dueDate).toEqual({ year: now.getFullYear(), month: now.getMonth() + 1, date: now.getDate(), });
+  });
+
+  it(`should set state properly on dueDate.year input`, () => {
+    const year = 'TEST_YEAR';
+    const now = new Date();
+    const component = mount(newTodo);
+    const wrapper = component.find('input').at(1);
+    wrapper.simulate('change', { target: { value: year } });
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    expect(newTodoInstance.state.title).toEqual('');
+    expect(newTodoInstance.state.content).toEqual('');
+    expect(newTodoInstance.state.dueDate).toEqual({ year: 'TEST_YEAR', month: now.getMonth() + 1, date: now.getDate(), });
+  });
+
+  it(`should set state properly on content input`, () => {
+    const month = 'TEST_MONTH';
+    const now = new Date();
+    const component = mount(newTodo);
+    const wrapper = component.find('input').at(2);
+    wrapper.simulate('change', { target: { value: month } });
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    expect(newTodoInstance.state.title).toEqual('');
+    expect(newTodoInstance.state.content).toEqual('');
+    expect(newTodoInstance.state.dueDate).toEqual({ year: now.getFullYear(), month: 'TEST_MONTH', date: now.getDate(), });
+  });
+
+  it(`should set state properly on content input`, () => {
+    const date = 'TEST_DATE';
+    const now = new Date();
+    const component = mount(newTodo);
+    const wrapper = component.find('input').at(3);
+    wrapper.simulate('change', { target: { value: date } });
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    expect(newTodoInstance.state.title).toEqual('');
+    expect(newTodoInstance.state.content).toEqual('');
+    expect(newTodoInstance.state.dueDate).toEqual({ year: now.getFullYear(), month: now.getMonth() + 1, date: 'TEST_DATE', });
   });
 });
 

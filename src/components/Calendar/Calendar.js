@@ -33,7 +33,7 @@ const renderCalenderBody = (dates, todos, clickDone) => {
             {
               todos.filter(todo => {
                 return todo.year === date.getFullYear() &&
-                  todo.month === date.getMonth() &&
+                  todo.month === date.getMonth()+1 &&
                   todo.date === date.getDate();
               }).map(todo => {
                 return (
@@ -75,7 +75,7 @@ const Calendar = (props) => {
   const year = props.year;
   const month = props.month - 1;
   let date = 1;
-  let maxDate = (new Date(year, month + 1, 0)).getDate();
+  let maxDate = (new Date(year, month, 0)).getDate();
 
   for (let date=1; date<=maxDate; date++) {
     dates.push(new Date(year, month, date));

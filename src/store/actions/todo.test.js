@@ -4,10 +4,16 @@ import axios from 'axios';
 import * as actionCreators from './todo';
 import store from '../store';
 
+const now = new Date();
 const stubTodo = {
   id: 0,
   title: 'title 1',
-  content: 'content 1'
+  content: 'content 1',
+  dueDate: {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+    date: now.getDate(),
+  },
 };
 
 describe('ActionCreators', () => {
@@ -98,6 +104,8 @@ describe('ActionCreators', () => {
       })
 
     store.dispatch(actionCreators.postTodo(stubTodo)).then(() => {
+      const newState = store.getState()
+      expect(newState.td.todos.at(-1).id).toBe(stubTodo.id);
       expect(spy).toHaveBeenCalledTimes(1);
       done();
     });
