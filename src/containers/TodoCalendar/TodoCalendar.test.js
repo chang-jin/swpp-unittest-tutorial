@@ -11,9 +11,9 @@ import * as actionCreators from "../../store/actions/todo";
 
 const stubInitialState = {
   todos: [
-    { id: 1, title: "TODO_TEST_TITLE_1", done: true, year: 1996, month: 4, date: 17 },
-    { id: 2, title: "TODO_TEST_TITLE_2", done: false, year: 2021, month: 10, date: 1 },
-    { id: 3, title: "TODO_TEST_TITLE_3", done: false, year: 2017, month: 5, date: 15 },
+    { id: 1, title: "TODO_TEST_TITLE_1", done: true, year: 2021, month: 9, date: 1 },
+    { id: 2, title: "TODO_TEST_TITLE_2", done: false, year: 2021, month: 9, date: 2 },
+    { id: 3, title: "TODO_TEST_TITLE_3", done: false, year: 2021, month: 9, date: 3 },
   ],
   selectedTodo: null,
 };
