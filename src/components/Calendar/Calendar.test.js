@@ -32,7 +32,7 @@ describe('<Calendar />', () => {
         const component = shallow(<Calendar year={2021} month={9} todos={stubTodos} />);
         const wrapper = component.find('.todoTitle');
 
-        expect(wrapper.length).toBe(1);
+        expect(wrapper.length).toBe(0);
         //console.log(component.debug());
     })
 })

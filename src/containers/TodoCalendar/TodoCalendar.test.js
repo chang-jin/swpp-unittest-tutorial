@@ -10,7 +10,15 @@ import { Provider } from 'react-redux';
 import Calendar from '../../components/Calendar/Calendar';
 import { Table } from 'semantic-ui-react';
 
-const mockCalendar = <Table className="spyCalendar" clickDone={() => {}}/>
+jest.mock('../../components/Calendar/Calendar', () => {
+    return jest.fn(props => {
+        return (
+            <div className="spyCalendar">
+                <button className="spyTodo" onClick={props.clickDone} />
+            </div>
+        )
+    })
+})
 
 const stubInitialState = {
     todos: [
@@ -26,12 +34,6 @@ const mockStore = getMockStore(stubInitialState);
 describe('<TodoCalendar />', () => {
     let todoCalender;
 
-    beforeAll(() => {
-        jest.mock('../../components/Calendar/Calendar', () => ({
-            default: mockCalendar
-        }));
-    })
-
     beforeEach(() => {
         todoCalender = (
             <Provider store={mockStore}>
@@ -46,28 +48,39 @@ describe('<TodoCalendar />', () => {
 
     it('should render Calendar', () => {
         const component = mount(todoCalender);
-        const wrapper = component.find('Table');
+        const wrapper = component.find('.spyCalendar');
 
         expect(wrapper.length).toBe(1);
-    })
+    });
+
     it('should handle click prev without error', () => {
         const component = mount(todoCalender);
         const wrapper = component.find('button');
         wrapper.at(0).simulate('click');
-
         const todoCalenderInstance = component.find(TodoCalendar.WrappedComponent).instance();
         expect(todoCalenderInstance.state.month).toBe(8);
         expect(todoCalenderInstance.state.year).toBe(2021);
+
+        for(let i = 0; i < 8; i++) {
+            wrapper.at(0).simulate('click');
+        }
+        expect(todoCalenderInstance.state.month).toBe(12);
+        expect(todoCalenderInstance.state.year).toBe(2020);
     });
 
     it('should handle click next without error', () => {
         const component = mount(todoCalender);
         const wrapper = component.find('button');
         wrapper.at(1).simulate('click');
-
         const todoCalenderInstance = component.find(TodoCalendar.WrappedComponent).instance();
         expect(todoCalenderInstance.state.month).toBe(10);
         expect(todoCalenderInstance.state.year).toBe(2021);
+
+        for(let i = 0; i < 3; i++) {
+            wrapper.at(1).simulate('click');
+        }
+        expect(todoCalenderInstance.state.month).toBe(1);
+        expect(todoCalenderInstance.state.year).toBe(2022);
     });
 
     it('should call getTodos', () => {
@@ -78,12 +91,11 @@ describe('<TodoCalendar />', () => {
     });
 
     it('should pass toggleTodo to child component', () => {
-        const spyOnToggleTodo = jest.spyOn(actionCreators, 'toggleTodo')
-            .mockImplementation(id => {return dispatch => {}; });
+        const spyToggleTodo = jest.spyOn(actionCreators, 'toggleTodo')
+            .mockImplementation(id => { return dispatch => {}; });
         const component = mount(todoCalender);
-        const wrapper = component.find(Calendar);
-
-        //expect(wrapper).toHaveProperty('props.');
-        //console.log(component.debug());
+        const wrapper = component.find('.spyCalendar .spyTodo');
+        wrapper.simulate('click');
+        expect(spyToggleTodo).toBeCalledTimes(1);
     })
 });
