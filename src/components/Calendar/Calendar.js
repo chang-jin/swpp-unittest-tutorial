@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react'
 
+
 import './Calendar.css';
 
 const CALENDAR_HEADER = (
@@ -38,6 +39,7 @@ const renderCalenderBody = (dates, todos, clickDone) => {
               }).map(todo => {
                 return (
                   <div
+                    id="todoTitle-calendar"
                     key={todo.id}
                     className={`todoTitle ${todo.done ? 'done':'notdone'}`}
                     onClick={() => clickDone(todo.id)}>
@@ -64,7 +66,7 @@ const renderCalenderBody = (dates, todos, clickDone) => {
 }
 
 const renderCalendar = (dates, todos, clickDone) => (
-  <Table striped style={{"height": "600px", "width": "600px"}}>
+  <Table class = "calendar-table" striped style={{"height": "600px", "width": "600px"}}>
     {CALENDAR_HEADER}
     {renderCalenderBody(dates, todos, clickDone)}
   </Table>
