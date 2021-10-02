@@ -35,10 +35,10 @@ class TodoCalendar extends Component {
 
   render() {
     return (
-      <div>
+      <div className="todoCalendar-container">
         <div className="link"><NavLink to='/todos' exact>See TodoList</NavLink></div>
         <div className="header">
-          <button onClick={this.handleClickPrev}> prev month </button>
+          <button className="prev-button" onClick={this.handleClickPrev}> prev month </button>
           {this.state.year}.{this.state.month}
           <button onClick={this.handleClickNext}> next month </button>
         </div>
