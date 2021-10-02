@@ -53,12 +53,51 @@ describe('<NewTodo />', () => {
   it(`should set state properly on title input`, () => {
     const title = 'TEST_TITLE'
     const component = mount(newTodo);
-    const wrapper = component.find('input');
+    const wrapper = component.find('input[value=""]');
     wrapper.simulate('change', { target: { value: title } });
     const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    //console.log(newTodoInstance);
     expect(newTodoInstance.state.title).toEqual(title);
     expect(newTodoInstance.state.content).toEqual('');
+    expect(newTodoInstance.state.dueDate.year).toEqual(2021);
+    expect(newTodoInstance.state.dueDate.month).toEqual(10);
+    expect(newTodoInstance.state.dueDate.date).toEqual(2);
   });
+
+  it(`should set state properly on title input`, () => {
+    const title = 'TEST_TITLE'
+    const component = mount(newTodo);
+    const wrapper = component.find('input[value=2021]');
+    wrapper.simulate('change', { target: { value: title } });
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    //console.log(newTodoInstance);
+
+    expect(newTodoInstance.state.dueDate.year).toEqual('TEST_TITLE');
+  });
+
+  it(`should set state properly on title input`, () => {
+    const title = 'TEST_TITLE'
+    const component = mount(newTodo);
+    const wrapper = component.find('input[value=10]');
+    wrapper.simulate('change', { target: { value: title } });
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    //console.log(newTodoInstance);
+
+    expect(newTodoInstance.state.dueDate.month).toEqual('TEST_TITLE');
+  });
+
+  it(`should set state properly on title input`, () => {
+    const title = 'TEST_TITLE'
+    const component = mount(newTodo);
+    const wrapper = component.find('input[value=2]');
+    wrapper.simulate('change', { target: { value: title } });
+    const newTodoInstance = component.find(NewTodo.WrappedComponent).instance();
+    //console.log(newTodoInstance);
+
+    expect(newTodoInstance.state.dueDate.date).toEqual('TEST_TITLE');
+  });
+
+  
 
   it(`should set state properly on content input`, () => {
     const content = 'TEST_CONTENT'

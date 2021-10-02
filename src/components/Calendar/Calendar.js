@@ -32,9 +32,9 @@ const renderCalenderBody = (dates, todos, clickDone) => {
             <div className="date">{date.getDate()}</div>
             {
               todos.filter(todo => {
-                return todo.year === date.getFullYear() &&
-                  todo.month === date.getMonth() &&
-                  todo.date === date.getDate();
+                return todo.year == date.getFullYear() &&
+                  todo.month == date.getMonth() &&
+                  todo.date == date.getDate();
               }).map(todo => {
                 return (
                   <div
@@ -77,8 +77,10 @@ const Calendar = (props) => {
   let date = 1;
   let maxDate = (new Date(year, month + 1, 0)).getDate();
 
+  //console.log(props.todos);
+
   for (let date=1; date<=maxDate; date++) {
-    dates.push(new Date(year, month, date));
+    dates.push(new Date(year, month + 1, date));
   }
 
   return renderCalendar(dates, props.todos, props.clickDone);
