@@ -39,7 +39,7 @@ const renderCalenderBody = (dates, todos, clickDone) => {
                 return (
                   <div
                     key={todo.id}
-                    className={`todoTitle ${todo.done ? 'done':'notdone'}`}
+                    className={`todoTitle_${todo.done ? 'done':'notdone'}`}
                     onClick={() => clickDone(todo.id)}>
                     {todo.title}
                   </div>

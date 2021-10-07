@@ -7,7 +7,8 @@ import store from '../store';
 const stubTodo = {
   id: 0,
   title: 'title 1',
-  content: 'content 1'
+  content: 'content 1',
+  dueDate: {year: 2021, month:10, date:7}
 };
 
 describe('ActionCreators', () => {
@@ -43,6 +44,8 @@ describe('ActionCreators', () => {
   });
   */
   // Implementation using `spyOn` API
+
+
   it(`'getTodos' should fetch todos correctly`, (done) => {
     const stubTodoList = [stubTodo];
 
@@ -65,6 +68,7 @@ describe('ActionCreators', () => {
     });
   });
 
+
   it(`'getTodo' should fetch todo correctly`, (done) => {
     const spy = jest.spyOn(axios, 'get')
       .mockImplementation(url => {
@@ -79,6 +83,7 @@ describe('ActionCreators', () => {
 
     store.dispatch(actionCreators.getTodo()).then(() => {
       const newState = store.getState();
+
       expect(newState.td.selectedTodo).toBe(stubTodo);
       expect(spy).toHaveBeenCalledTimes(1);
       done();
