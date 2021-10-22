@@ -64,7 +64,7 @@ const renderCalenderBody = (dates, todos, clickDone) => {
 }
 
 const renderCalendar = (dates, todos, clickDone) => (
-  <Table striped style={{"height": "600px", "width": "600px"}}>
+  <Table className='Calendar' striped style={{"height": "600px", "width": "600px"}}>
     {CALENDAR_HEADER}
     {renderCalenderBody(dates, todos, clickDone)}
   </Table>
@@ -84,4 +84,4 @@ const Calendar = (props) => {
   return renderCalendar(dates, props.todos, props.clickDone);
 }
 
-export default Calendar
+export default Calendar;
